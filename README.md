@@ -1,10 +1,28 @@
-# Getting Started with Create React App
+# HackKU React Demo
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Prerequisites
+
+You need to have both Node.js and npm installed in order to use React. If you're on Windows or MacOS, I recommend downloading from here: [Download NodeJs](https://nodejs.org/en/download/). On Linux, you can either download the binary from the above website or use a [Node Version Manager](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+
+## Recommended Startup
+
+I strongly recommend that you work through this demo yourself from scratch instead of cloning this repo. I like to use Create React App because it bootstraps everything for you, and I use the typescript template because it makes finding errors a lot simpler. The command to initialize the app this way is
+
+`npx create-react-app my-app --template typescript`
+
+This command takes a bit to run (<5 min), so I run this as soon as possible. You can replace "my-app" with whatever you want your project named.
+
+If you're making a git repo (you should), I recommend doing it inside the parent folder that this command creates.
+
+## Alternative Startup
+
+Alternatively, you can clone and use this repo as your starter code, but I think you learn less by doing it that way.
+
 ## Available Scripts
 
-In the project directory, you can run:
+In the project directory (or the one you create), you can run:
 
 ### `npm start`
 
