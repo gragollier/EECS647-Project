@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 type Hackit = {
   name: string,
@@ -6,6 +7,8 @@ type Hackit = {
 }
 
 const Home = () => {
+  const history = useHistory();
+  
   const [hackits, setHackits] = useState<Hackit[]>([]);
 
   const [newHackitName, setNewHackitName] = useState('');
@@ -29,6 +32,10 @@ const Home = () => {
     }
   }
 
+  const clickSubhackit = (hackit: Hackit) => {
+    history.push(`/h/${hackit.name}`);
+  }
+
   return (
     <div>
       <h2>
@@ -40,7 +47,11 @@ const Home = () => {
         </h4>
         {hackits.map((hackit) => {
           return(
-            <div key={hackit.name} style={{backgroundColor: 'darkgreen'}}>
+            <div 
+              key={hackit.name} 
+              style={{backgroundColor: 'darkgreen'}}
+              onClick={() => clickSubhackit(hackit)}
+            >
               <h5>
                 {hackit.name}
               </h5>

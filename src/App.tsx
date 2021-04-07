@@ -1,20 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 
-import SignIn from './SignIn';
-import Home from './Home';
+import AppRouter from './routes';
 
 function App() {
-  const [signedIn, setSignedIn] = useState(false);
-
   return (
     <div className="App">
       <header className="App-header">
-        {!signedIn ? (
-          <SignIn setSignedIn={setSignedIn} />
-        ) : (
-          <Home />
-        )}
+        <AppRouter />
       </header>
     </div>
   );
