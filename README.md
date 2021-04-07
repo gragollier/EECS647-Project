@@ -1,64 +1,27 @@
-# HackKU React Demo
+# Custom Component Rendering
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+We don't want to have really large `App.tsx` files, so React provides a way to create and render custom components.
 
-## Prerequisites
+## Creating Components
 
-You need to have both Node.js and npm installed in order to use React. If you're on Windows or MacOS, I recommend downloading from here: [Download NodeJs](https://nodejs.org/en/download/). On Linux, you can either download the binary from the above website or use a [Node Version Manager](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+Components in React are essentially functions that return the HTML (technically tsx) that the component will render. We typically put these components in their own files. Doing this, we need to
 
-## Recommended Startup
+`export default ComponentName`
 
-I strongly recommend that you work through this demo yourself from scratch instead of cloning this repo. I like to use Create React App because it bootstraps everything for you, and I use the typescript template because it makes finding errors a lot simpler. The command to initialize the app this way is
+at the bottom of our new file and
 
-`npx create-react-app my-app --template typescript`
+`import ComponentName from './fileName'`
 
-This command takes a bit to run (<5 min), so I run this as soon as possible. You can replace "my-app" with whatever you want your project named.
+in the file where we want to include it. We can then use it like an HTML tag:
 
-If you're making a git repo (you should), I recommend doing it inside the parent folder that this command creates.
+`<Component Name />`
 
-## Alternative Startup
+## Managing State
 
-Alternatively, you can clone and use this repo as your starter code, but I think you learn less by doing it that way.
+We often want our components to be interactive for the user. Sometimes this will take the form of capturing user input and storing it in variables. We can also print the content of variables to the web page.
 
-## Available Scripts
+We have to manage our variables in a very specific way since we want to update the state of our application based on user actions. We declare them using `useState` as so:
 
-In the project directory (or the one you create), you can run:
+`const [variableName, setVariableName] = useState(initialValue)`
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+`variableName` is how we read the state of the variable and `setVariableName` is a function to update its state.
