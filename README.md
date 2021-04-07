@@ -6,6 +6,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 You need to have both Node.js and npm installed in order to use React. If you're on Windows or MacOS, I recommend downloading from here: [Download NodeJs](https://nodejs.org/en/download/). On Linux, you can either download the binary from the above website or use a [Node Version Manager](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 
+I also very strongly recommend the [VSCode editor](https://code.visualstudio.com/). It makes React a lot easier with autocomplete and plenty of helpful extensions. 
+
 ## Recommended Startup
 
 I strongly recommend that you work through this demo yourself from scratch instead of cloning this repo. I like to use Create React App because it bootstraps everything for you, and I use the typescript template because it makes finding errors a lot simpler. The command to initialize the app this way is
