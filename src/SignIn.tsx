@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 
-const SignIn = () => {
+type Props = {
+  setSignedIn: (b: boolean) => void,
+}
+
+const SignIn = (props: Props) => {
+  const { setSignedIn } = props;
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -10,6 +16,12 @@ const SignIn = () => {
 
   const changePassword = (event: any) => {
     setPassword(event.target.value);
+  }
+
+  const handleClick = (event: any) => {
+    if (username && password) {
+      setSignedIn(true);
+    }
   }
 
   return (
@@ -29,6 +41,10 @@ const SignIn = () => {
       <input type="password" value={password} onChange={changePassword} />
       <br />
       Password value -- {password}
+      <br />
+      <button onClick={handleClick}>
+        Sign In
+      </button>
     </div>
   )
 };
