@@ -1,55 +1,31 @@
-# Props and Conditional Rendering
+# List State and Repeated Rendering
 
-Often we either want to pass information into our components or render different components based on application state. For the former, we use props, and the latter we use a technique called conditional rendering.
+Sometimes what we what the user to interact with will have list elements, so we'll explore how to render based on lists and how to update list states.
 
-## Props
+# List State
 
-Props are essentially arguments to our functional components. We take in the props as we would any other argument in our function definition:
+Lists are declared very similarly to other state variables, but we need to specify a type in the state declaration. Say we want a `number` list, we would have
 
-```typescript
-const ComponentName = (props: Props) => {
-  function body
-};
-```
+`const [nums, setNums] = useState<number[]>([]);`
 
-We have to define the `Props` type to include the properties that we want to take in. For example, we could define `Props` to be
+Modifying the list is also handled a little differently as well. Most of the time we want our new list state to depend on the previous state, so instead of passing the new list into `setNums`, we'll have `setNums` take a function. Say we want to append the number `8` to the end of `nums`:
 
-```typescript
-type Props = {
-  prop1: string,
-  prop2: number,
-  prop3: (n: number) => void,
-}
-```
+`setNums((prevNums) => [...prevNums, 8]`
 
-where `prop1` is a string, `prop2` is a number, and `prop3` is a function that takes a number as an argument and returns nothing.
+This says that we create a new list out of the elements of the previous list and the new `8` tagged on at the end.
 
-We then pass these arguments into our custom component when we include its tag.
+# Repeated Rendering
 
-`<ComponentName prop1={5} prop2="I'm a string" prop3={myFunction}>`
-
-## Conditional Rendering
-
-There are times where we need to make a decision about whether or not to render a component.
-
-Let's say that we only want to render a component `ComponentName` on the condition that `myCondition` is `true`. We would put the following in our tsx:
+When we want to render an element once for each element of a list, we can actually build that directly into our tsx using the `map` function. This executes the function body once for each element of the list, and we're expected to return the jsx body that we want rendered for each element.
 
 ```tsx
 <div>
-  {myCondition && (
-    <ComponentName />
-  )}
-</div>
-```
-
-We can also render one component if the condition is true and a different if the condition is false:
-
-```tsx
-<div>
-  {myCondition ? (
-    <ComponentA />
-  ) : (
-    <ComponentB />
-  )}
+  {nums.map((num) => {
+    return (
+      <p>
+        Plus 4 : {num + 4}
+      </p>
+    );
+  })}
 </div>
 ```

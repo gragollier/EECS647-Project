@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 
 import SignIn from './SignIn';
+import Home from './Home';
 
 function App() {
   const [signedIn, setSignedIn] = useState(false);
@@ -12,9 +13,7 @@ function App() {
         {!signedIn ? (
           <SignIn setSignedIn={setSignedIn} />
         ) : (
-          <p>
-            You're signed in!
-          </p>
+          <Home />
         )}
       </header>
     </div>
