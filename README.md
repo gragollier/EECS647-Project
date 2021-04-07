@@ -8,7 +8,7 @@ Props are essentially arguments to our functional components. We take in the pro
 
 ```typescript
 const ComponentName = (props: Props) => {
-  function body
+  // function body
 };
 ```
 
