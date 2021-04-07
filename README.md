@@ -14,7 +14,7 @@ at the bottom of our new file and
 
 in the file where we want to include it. We can then use it like an HTML tag:
 
-`<Component Name />`
+`<ComponentName />`
 
 ## Managing State
 
