@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+
 type Hackit = {
   name: string,
   description: string,
@@ -30,6 +35,8 @@ const Home = () => {
       };
       setHackits(oldHackits => [...oldHackits, newHackit]);
     }
+    setNewHackitDesc('');
+    setNewHackitName('');
   }
 
   const clickSubhackit = (hackit: Hackit) => {
@@ -38,46 +45,46 @@ const Home = () => {
 
   return (
     <div>
-      <h2>
+      <Typography variant="h2">
         Welcome to Hackit!
-      </h2>
+      </Typography>
       <div>
-        <h4>
+        <Typography variant="h4">
           Here is the current list of subhackits:
-        </h4>
+        </Typography>
         {hackits.map((hackit) => {
           return(
-            <div 
+            <Paper 
               key={hackit.name} 
-              style={{backgroundColor: 'darkgreen'}}
+              style={{padding: '20px', margin: '5px'}}
               onClick={() => clickSubhackit(hackit)}
             >
-              <h5>
+              <Typography variant="h5">
                 {hackit.name}
-              </h5>
-              <p>
+              </Typography>
+              <Typography variant="body1">
                 {hackit.description}
-              </p>
-            </div>
+              </Typography>
+            </Paper>
           );
         })}
       </div>
       <div style={{textAlign: 'left'}}>
-        <h4>
+        <Typography variant="h4">
           Create a subhackit?
-        </h4>
-        <p>
+        </Typography>
+        <Typography variant="body1">
           Name:
-        </p>
-        <input type="text" value={newHackitName} onChange={changeNewHackitName} />
-        <p>
+        </Typography>
+        <TextField variant="outlined" value={newHackitName} onChange={changeNewHackitName} />
+        <Typography variant="body1">
           Description:
-        </p>
-        <input type="text" value={newHackitDesc} onChange={changeNewHackitDesc} />
+        </Typography>
+        <TextField variant="outlined" value={newHackitDesc} onChange={changeNewHackitDesc} />
         <br />
-        <button onClick={createNewHackit}>
+        <Button variant="contained" color="primary" onClick={createNewHackit}>
           Create Subhackit
-        </button>
+        </Button>
       </div>
     </div>
   );
