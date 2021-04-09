@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
+const api = 'https://1pyrtegry1.execute-api.us-east-1.amazonaws.com/prod';
+const path = '/signin'
+
 const SignIn = () => {
   const history = useHistory();
 
@@ -16,9 +19,24 @@ const SignIn = () => {
   }
 
   const handleClick = (event: any) => {
-    if (username && password) {
-      history.push('/home');
-    }
+    const request = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ 
+        Username: username, 
+        Password: password,
+      }),
+    };
+
+    console.log(request);
+
+    fetch(api + path, request)
+      .then(response => response.json())
+      .then(data => {
+        if (data.SignedIn) {
+          history.push('/home');
+        }
+      });
   }
 
   return (

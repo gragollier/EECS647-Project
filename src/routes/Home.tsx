@@ -7,9 +7,12 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
 type Hackit = {
-  name: string,
-  description: string,
+  Name: string,
+  Description: string,
 }
+
+const api = 'https://1pyrtegry1.execute-api.us-east-1.amazonaws.com/prod';
+const path = '/createsubhackit';
 
 const Home = () => {
   const history = useHistory();
@@ -29,11 +32,21 @@ const Home = () => {
 
   const createNewHackit = (event: any) => {
     if (newHackitName && newHackitDesc) {
-      const newHackit: Hackit = {
-        name: newHackitName,
-        description: newHackitDesc,
+      const request = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ 
+          Name: newHackitName,
+          Description: newHackitDesc,
+        }),
       };
-      setHackits(oldHackits => [...oldHackits, newHackit]);
+
+      fetch(api+path, request)
+        .then(response => response.json())
+        .then(data => {
+          setHackits(data.Subhackits);
+        })
+      //setHackits(oldHackits => [...oldHackits, newHackit]);
     }
     setNewHackitDesc('');
     setNewHackitName('');
@@ -55,15 +68,15 @@ const Home = () => {
         {hackits.map((hackit) => {
           return(
             <Paper 
-              key={hackit.name} 
+              key={hackit.Name} 
               style={{padding: '20px', margin: '5px'}}
               onClick={() => clickHackit(hackit)}
             >
               <Typography variant="h5">
-                {hackit.name}
+                {hackit.Name}
               </Typography>
               <Typography variant="body1">
-                {hackit.description}
+                {hackit.Description}
               </Typography>
             </Paper>
           );

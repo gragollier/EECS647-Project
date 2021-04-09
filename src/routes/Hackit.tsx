@@ -6,16 +6,12 @@ type UrlParams = {
 }
 
 type Hackit = {
-  name: string,
-  description: string,
+  Name: string,
+  Description: string,
 }
 
-const database: Hackit[] = [
-  {
-    name: 'dogs',
-    description: 'all kinds of puppies!',
-  }
-]
+const api = 'https://1pyrtegry1.execute-api.us-east-1.amazonaws.com/prod';
+const path = '/gethackit';
 
 const HackitPage = () => {
   const { slug } = useParams<UrlParams>();
@@ -23,9 +19,21 @@ const HackitPage = () => {
   const [hackit, setHackit] = useState<Hackit>();
 
   useEffect(() => {
-    setHackit(database.find((hackit) => {
-      return hackit.name === slug
-    }));
+    if (slug){
+      const request = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ 
+          Name: slug,
+        }),
+      };
+  
+      fetch(api + path, request)
+        .then(response => response.json())
+        .then(data => {
+          setHackit(data.hackit);
+        });
+    }
   }, [slug])
 
   return (
