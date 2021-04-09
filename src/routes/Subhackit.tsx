@@ -6,16 +6,12 @@ type UrlParams = {
 }
 
 type Hackit = {
-  name: string,
-  description: string,
+  Name: string,
+  Description: string,
 }
 
-const database: Hackit[] = [
-  {
-    name: 'dogs',
-    description: 'all kinds of puppies!',
-  }
-]
+const api = 'https://1pyrtegry1.execute-api.us-east-1.amazonaws.com/prod';
+const path = '/getsubhackit';
 
 const Subhackit = () => {
   const { slug } = useParams<UrlParams>();
@@ -28,7 +24,21 @@ const Subhackit = () => {
   }, [slug]);
 
   useEffect(() => {
-    setSubhackit(database.find((hackit) => hackit.name === subhackitName));
+    if (subhackitName){
+      const request = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ 
+          Name: subhackitName,
+        }),
+      };
+  
+      fetch(api + path, request)
+        .then(response => response.json())
+        .then(data => {
+          setSubhackit(data.Subhackit);
+        });
+    }
   }, [subhackitName])
 
   return (
@@ -37,10 +47,10 @@ const Subhackit = () => {
         {subhackit ? (
           <div>
             <h2>
-              {subhackit.name}
+              {subhackit.Name}
             </h2>
             <p>
-              {subhackit.description}
+              {subhackit.Description}
             </p>
           </div>
         ) : (
