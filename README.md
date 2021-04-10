@@ -1,56 +1,31 @@
-# Index and Styling
+# Serverless Backend Workshop
 
-Our app is beautiful and special in it's own way, but... it could be nicer.
+For this workshop, most of the heavy lifting will be done in the AWS console. The little that will be done on the frontend will mainly be HTTP requests to our Serverless API.
 
-## Index
+## API Calls
 
-Our app tab title is currently the default "React App" and the tab icon is the default React logo. We can change these in our `public/index.html` folder.
+There are many ways that we can make HTTP requests in React. The simplest and quickest to set up is to use the `fetch` function.
 
-There are many things you can do in this file, but the easiest two are changing the title and the icon.
+In order to use the `fetch` function, we need two things: a url to hit and a request.
 
-We change the title in the `<Title>` tag, and we change the icon by replacing the `public/favicon.ico` with our logo.
+The url will be that of the specific endpoint that we want to hit in the api.
 
-When changing the logo, I recommend using online ico converters. There are many, depending on your starting image type. 
+The anatomy of a request is a little bit more complicated. When we make an HTTP request, there are a few different Method types that we can use. GET requests have no information stored in their body, and they simply expect the endpoint to return information. POST requests can have information in their body, so the server can perform work base on this body before returning the response data. We will mainly use POST requests. There are more, but I won't discuss them here.
 
-## Styling
+We perform the request by doing
 
-Styling is a word to describe how we can change the appearance of components and elements in our page.
+`fetch(url, request)`
 
-It can be quite tedious and take lots of time to define styles for every single type of component that you want to use in your app, so I instead use pre-built component packs. My favorite is [Material-UI](https://material-ui.com/).
+and this will eventually resolve into a response.
 
-### Installation
-
-You can install Material-UI by using
-
-`npm install @material-ui/core`
-
-This will install the vast majority of Material-UI components, but some are in packages other than `core` and will need to be installed separately if you want them.
-
-### Usage
-
-We can then include the components we want and use them normally.
-
-If we want to include a button component for example.
+Once this resolves into a response, we need to extract the json data from the response, and then following that we can operate on the data.
 
 ```typescript
-import {Button} from '@material-ui/core/Button';
+fetch(url, request)
+  .then(response => response.json())
+  .then(data => {
+    // use data
+  });
 ```
 
-And then we use this like we would any other button:
-
-```typescript
-const ComponentName = () => {
-  return (
-    <Button 
-      variant="contained" 
-      color="primary"
-    >
-      Button Text
-    </Button>
-  );
-};
-```
-
-The properties we pass to the Material-UI, like the `variant` and `color` props, are very well documented on the various component pages (the one for Buttons is [here](https://material-ui.com/components/buttons/)), and it gives many different use cases for the components.
-
-Using pre-built components speeds up development a lot because it greatly simplifies the styling you have to do yourself.
+Like mentioned, this is just one way of performing these HTTP requests, and honestly it's far from the best one, but I'm using it for this demo because it's fast and easy to understand.
