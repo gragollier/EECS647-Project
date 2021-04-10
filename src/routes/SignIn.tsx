@@ -33,7 +33,7 @@ const SignIn = () => {
     fetch(api + path, request)
       .then(response => response.json())
       .then(data => {
-        if (data.SignedIn) {
+        if (data.signedIn) {
           history.push('/home');
         }
       });
