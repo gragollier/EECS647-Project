@@ -7,8 +7,8 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
 type Hackit = {
-  Name: string,
-  Description: string,
+  name: string,
+  description: string,
 }
 
 const api = 'https://1pyrtegry1.execute-api.us-east-1.amazonaws.com/prod';
@@ -36,8 +36,8 @@ const Home = () => {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ 
-          Name: newHackitName,
-          Description: newHackitDesc,
+          name: newHackitName,
+          description: newHackitDesc,
         }),
       };
 
@@ -68,15 +68,15 @@ const Home = () => {
         {hackits.map((hackit) => {
           return(
             <Paper 
-              key={hackit.Name} 
+              key={hackit.name} 
               style={{padding: '20px', margin: '5px'}}
               onClick={() => clickHackit(hackit)}
             >
               <Typography variant="h5">
-                {hackit.Name}
+                {hackit.name}
               </Typography>
               <Typography variant="body1">
-                {hackit.Description}
+                {hackit.description}
               </Typography>
             </Paper>
           );

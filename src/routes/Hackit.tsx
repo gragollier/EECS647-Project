@@ -6,8 +6,8 @@ type UrlParams = {
 }
 
 type Hackit = {
-  Name: string,
-  Description: string,
+  name: string,
+  description: string,
 }
 
 const api = 'https://1pyrtegry1.execute-api.us-east-1.amazonaws.com/prod';
@@ -24,7 +24,7 @@ const HackitPage = () => {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ 
-          Name: slug,
+          name: slug,
         }),
       };
   
