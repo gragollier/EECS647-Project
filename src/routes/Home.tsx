@@ -39,7 +39,7 @@ const Home = () => {
     setNewHackitName('');
   }
 
-  const clickSubhackit = (hackit: Hackit) => {
+  const clickHackit = (hackit: Hackit) => {
     history.push(`/h/${hackit.name}`);
   }
 
@@ -50,14 +50,14 @@ const Home = () => {
       </Typography>
       <div>
         <Typography variant="h4">
-          Here is the current list of subhackits:
+          Here is the current list of hackits:
         </Typography>
         {hackits.map((hackit) => {
           return(
             <Paper 
               key={hackit.name} 
               style={{padding: '20px', margin: '5px'}}
-              onClick={() => clickSubhackit(hackit)}
+              onClick={() => clickHackit(hackit)}
             >
               <Typography variant="h5">
                 {hackit.name}
@@ -69,9 +69,9 @@ const Home = () => {
           );
         })}
       </div>
-      <div style={{textAlign: 'left'}}>
+      <div>
         <Typography variant="h4">
-          Create a subhackit?
+          Create a hackit?
         </Typography>
         <Typography variant="body1">
           Name:
@@ -83,7 +83,7 @@ const Home = () => {
         <TextField variant="outlined" value={newHackitDesc} onChange={changeNewHackitDesc} />
         <br />
         <Button variant="contained" color="primary" onClick={createNewHackit}>
-          Create Subhackit
+          Create Hackit
         </Button>
       </div>
     </div>

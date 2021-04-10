@@ -17,36 +17,33 @@ const database: Hackit[] = [
   }
 ]
 
-const Subhackit = () => {
+const HackitPage = () => {
   const { slug } = useParams<UrlParams>();
 
-  const [subhackitName, setSubhackitName] = useState('');
-  const [subhackit, setSubhackit] = useState<Hackit>();
+  const [hackit, setHackit] = useState<Hackit>();
 
   useEffect(() => {
-    setSubhackitName(slug);
-  }, [slug]);
-
-  useEffect(() => {
-    setSubhackit(database.find((hackit) => hackit.name === subhackitName));
-  }, [subhackitName])
+    setHackit(database.find((hackit) => {
+      return hackit.name === slug
+    }));
+  }, [slug])
 
   return (
     <div>
       <h2>
-        {subhackit ? (
+        {hackit ? (
           <div>
             <h2>
-              {subhackit.name}
+              {hackit.name}
             </h2>
             <p>
-              {subhackit.description}
+              {hackit.description}
             </p>
           </div>
         ) : (
           <div>
             <h2>
-              Subhackit not found
+              Hackit not found
             </h2>
           </div>
         )}
@@ -55,4 +52,4 @@ const Subhackit = () => {
   )
 };
 
-export default Subhackit;
+export default HackitPage;

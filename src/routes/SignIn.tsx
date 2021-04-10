@@ -22,7 +22,7 @@ const SignIn = () => {
   }
 
   return (
-    <div style={{'textAlign': 'left'}}>
+    <div>
       <h2>
         Sign In!
       </h2>

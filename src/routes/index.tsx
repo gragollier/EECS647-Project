@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './Home';
 import NotFound from './NotFound';
 import SignIn from './SignIn';
-import Subhackit from './Subhackit';
+import HackitPage from './Hackit';
 
 const AppRouter = () => {
   return (
@@ -23,7 +23,7 @@ const AppRouter = () => {
         <Route
           exact
           path="/h/:slug"
-          component={Subhackit}
+          component={HackitPage}
         />
         <Route
           exact
