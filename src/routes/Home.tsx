@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
@@ -11,13 +11,15 @@ type Hackit = {
   description: string,
 }
 
-const api = 'https://1pyrtegry1.execute-api.us-east-1.amazonaws.com/prod';
+const api = 'https://0l09ip0w5a.execute-api.us-east-1.amazonaws.com/Prod';
+const listPath = "/listsubhackits";
 const path = '/createsubhackit';
 
 const Home = () => {
   const history = useHistory();
   
   const [hackits, setHackits] = useState<Hackit[]>([]);
+  const [hackitsLoaded, setHackitsLoaded] = useState<boolean>(false);
 
   const [newHackitName, setNewHackitName] = useState('');
   const [newHackitDesc, setNewHackitDesc] = useState('');
@@ -43,14 +45,25 @@ const Home = () => {
 
       fetch(api+path, request)
         .then(response => response.json())
-        .then(data => {
-          setHackits(data.Subhackits);
+        .then(() => {
+          setHackitsLoaded(false);
         })
       //setHackits(oldHackits => [...oldHackits, newHackit]);
     }
     setNewHackitDesc('');
     setNewHackitName('');
   }
+
+  useEffect(() => {
+    if (!hackitsLoaded) {
+      fetch(api + listPath)
+      .then(res => res.json())
+      .then(hackits => {
+        setHackits(hackits);
+        setHackitsLoaded(true);
+      });
+    }
+  });
 
   const clickHackit = (hackit: Hackit) => {
     history.push(`/h/${hackit.name}`);
