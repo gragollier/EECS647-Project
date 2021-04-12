@@ -2,6 +2,7 @@ import { Divider, Dialog, Button, DialogTitle, DialogContent, DialogActions, Tex
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import { apiUrl } from '../config';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +31,6 @@ type Hackit = {
   posts: [Post]
 }
 
-const api = 'https://0l09ip0w5a.execute-api.us-east-1.amazonaws.com/Prod';
 const path = '/gethackit';
 const createPath = '/createpost';
 
@@ -75,7 +75,7 @@ const HackitPage = () => {
       }),
     };
 
-    fetch(api + createPath, request)
+    fetch(apiUrl + createPath, request)
       .then(response => response.json())
       .then(() => {
         setIsLoaded(false);
@@ -92,7 +92,7 @@ const HackitPage = () => {
         }),
       };
   
-      fetch(api + path, request)
+      fetch(apiUrl + path, request)
         .then(response => response.json())
         .then(data => {
           setIsLoaded(true);

@@ -5,13 +5,13 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { apiUrl } from '../config';
 
 type Hackit = {
   name: string,
   description: string,
 }
 
-const api = 'https://0l09ip0w5a.execute-api.us-east-1.amazonaws.com/Prod';
 const listPath = "/listsubhackits";
 const path = '/createsubhackit';
 
@@ -43,7 +43,7 @@ const Home = () => {
         }),
       };
 
-      fetch(api+path, request)
+      fetch(apiUrl+path, request)
         .then(response => response.json())
         .then(() => {
           setHackitsLoaded(false);
@@ -56,7 +56,7 @@ const Home = () => {
 
   useEffect(() => {
     if (!hackitsLoaded) {
-      fetch(api + listPath)
+      fetch(apiUrl + listPath)
       .then(res => res.json())
       .then(hackits => {
         setHackits(hackits);
