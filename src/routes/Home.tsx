@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -12,11 +15,36 @@ type Hackit = {
   description: string,
 }
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    textField: {
+      margin: theme.spacing(1),
+    },
+    button: {
+      margin: theme.spacing(1),
+      width: '25ch',
+      textAlign: 'center',
+    },
+    divider: {
+      margin: theme.spacing(3),
+    },
+    paper: {
+      padding: '20px',
+      margin: '5px',
+    }
+  }),
+);
+
 const listPath = "/listsubhackits";
 const path = '/createsubhackit';
 
 const Home = () => {
   const history = useHistory();
+  const classes = useStyles();
   
   const [hackits, setHackits] = useState<Hackit[]>([]);
   const [hackitsLoaded, setHackitsLoaded] = useState<boolean>(false);
@@ -70,19 +98,19 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <Container maxWidth="md">
       <Typography variant="h2">
         Welcome to Hackit!
       </Typography>
-      <div>
+      <Container>
         <Typography variant="h4">
-          Here is the current list of hackits:
+          Go to a hackit:
         </Typography>
         {hackits.map((hackit) => {
           return(
             <Paper 
               key={hackit.name} 
-              style={{padding: '20px', margin: '5px'}}
+              className={classes.paper}
               onClick={() => clickHackit(hackit)}
             >
               <Typography variant="h5">
@@ -94,25 +122,41 @@ const Home = () => {
             </Paper>
           );
         })}
-      </div>
-      <div>
+      </Container>
+      <Divider className={classes.divider} />
+      <Container className={classes.root} maxWidth="xs">
         <Typography variant="h4">
           Create a hackit?
         </Typography>
-        <Typography variant="body1">
-          Name:
-        </Typography>
-        <TextField variant="outlined" value={newHackitName} onChange={changeNewHackitName} />
-        <Typography variant="body1">
-          Description:
-        </Typography>
-        <TextField variant="outlined" value={newHackitDesc} onChange={changeNewHackitDesc} />
-        <br />
-        <Button variant="contained" color="primary" onClick={createNewHackit}>
+        <TextField
+          variant="outlined"
+          label="Name"
+          required
+          value={newHackitName}
+          onChange={changeNewHackitName}
+          className={classes.textField}
+          fullWidth
+        />
+        <TextField
+          variant="outlined"
+          label="Description"
+          multiline
+          required
+          value={newHackitDesc}
+          onChange={changeNewHackitDesc}
+          className={classes.textField}
+          fullWidth
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={createNewHackit}
+          className={classes.button}
+        >
           Create Hackit
         </Button>
-      </div>
-    </div>
+      </Container>
+    </Container>
   );
 }
 

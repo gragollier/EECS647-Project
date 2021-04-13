@@ -1,17 +1,42 @@
-import { Divider, Dialog, Button, DialogTitle, DialogContent, DialogActions, TextField, Typography, Container } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
+
+
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Divider from '@material-ui/core/Divider';
+import { Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+
 import { apiUrl } from '../config';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& .MuiTextField-root': {
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    textField: {
       margin: theme.spacing(1),
       width: '40ch',
     },
-  },
-}));
+    button: {
+      margin: theme.spacing(1),
+      width: '25ch',
+      textAlign: 'center',
+    },
+    divider: {
+      margin: theme.spacing(3),
+    },
+    paper: {
+      padding: '20px',
+      margin: '5px',
+    }
+  }),
+);
 
 type UrlParams = {
   slug: string,
@@ -109,8 +134,21 @@ const HackitPage = () => {
         </DialogTitle>
         <DialogContent>
           <form className={classes.root}>
-          <TextField id="post-title" label="Post Title" required onChange={onTitleChange} />
-          <TextField id="post-body" label="Post Body" required multiline onChange={onBodyChange} />
+            <TextField
+              id="post-title"
+              label="Post Title"
+              required
+              onChange={onTitleChange}
+              className={classes.textField}
+            />
+            <TextField
+              id="post-body"
+              label="Post Body"
+              required
+              multiline
+              onChange={onBodyChange}
+              className={classes.textField}
+            />
           </form>
         </DialogContent>
         <DialogActions>
@@ -120,31 +158,31 @@ const HackitPage = () => {
         </DialogActions>
       </Dialog>
         {hackit ? (
-          <div>
-            <Typography variant="h1">
+          <Container>
+            <Typography variant="h3">
               {hackit.name}
             </Typography>
             <Typography>
               {hackit.description}
             </Typography>
             <Button variant="outlined" color="primary" onClick={handleDialogOpen}>Create Post</Button>
-            <hr/>
+            <Divider className={classes.divider} />
             <Container style={{textAlign: "left"}}>
-            {hackit.posts.map(post =>     
-              <div key={post.postId}>
-                <Typography variant="h3">{post.title}</Typography>
-                <Typography variant="subtitle1">By {post.creator}</Typography>
-                <Typography>{post.body}</Typography>
-                <Divider />
-              </div>)}
-              </Container>
-          </div>
+              {hackit.posts.map(post =>     
+                <Paper key={post.postId} className={classes.paper}>
+                  <Typography variant="h3">{post.title}</Typography>
+                  <Typography variant="subtitle1">By {post.creator}</Typography>
+                  <Typography>{post.body}</Typography>
+                </Paper>
+              )}
+            </Container>
+          </Container>
         ) : (
-          <div>
-            <h2>
+          <Container>
+            <Typography variant="h3">
               Hackit not found
-            </h2>
-          </div>
+            </Typography>
+          </Container>
         )}
     </Container>
   )
