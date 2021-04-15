@@ -7,9 +7,6 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
-const api = 'https://1pyrtegry1.execute-api.us-east-1.amazonaws.com/prod';
-const path = '/signin'
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -45,25 +42,8 @@ const LogIn = () => {
   }
 
   const handleClick = (event: any) => {
-    const request = {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ 
-        username: username, 
-        password: password,
-      }),
-    };
-
-    console.log(request);
-
-    fetch(api + path, request)
-      .then(response => response.json())
-      .then(data => {
-        if (data.signedIn) {
-          localStorage.setItem("username", username);
-          history.push('/home');
-        }
-      });
+    localStorage.setItem("username", username);
+    history.push('/home');
   }
 
   return (
@@ -81,6 +61,7 @@ const LogIn = () => {
         fullWidth
       />
       <TextField 
+        type="password"
         variant="outlined" 
         label="Password"
         required
