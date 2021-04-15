@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
@@ -48,32 +48,30 @@ type Post = {
   title: string,
   body: string,
   timestamp: string
+  comments: Comment[],
 }
 
-type Hackit = {
-  name: string,
-  description: string,
-  posts: [Post]
+type Comment = {
+  commentId: string,
+  body: string,
+  tiemstamp: string,
+  username: string,
+  userBio: string,
 }
 
-const path = '/gethackit';
-const createPath = '/createpost';
+const getPostPath = '/getpost';
+const createCommentPath = '/createcomment';
 
-const HackitPage = () => {
+const PostPage = () => {
   const classes = useStyles();
-  const history = useHistory();
+
   const { slug } = useParams<UrlParams>();
 
-  const [hackit, setHackit] = useState<Hackit>();
+  const [post, setPost] = useState<Post>();
 
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-  const [title, setTitle] = useState<String>();
   const [body, setBody] = useState<String>();
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
-
-  const onTitleChange = (e: any) => {
-    setTitle(e.target.value);
-  }
 
   const onBodyChange = (e: any) => {
     setBody(e.target.value);
@@ -87,11 +85,7 @@ const HackitPage = () => {
     setIsDialogOpen(true);
   }
 
-  const openPost = (post: Post) => {
-    history.push(`/post/${post.postId}`);
-  }
-
-  const handleCreatePost = () => {
+  const handleCreateComment = () => {
     setIsDialogOpen(false);
     const username = localStorage.getItem("username");
 
@@ -99,14 +93,13 @@ const HackitPage = () => {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ 
-        sub: slug,
-        creator: username,
-        title: title,
+        postId: slug,
+        username: username,
         body: body
       }),
     };
 
-    fetch(apiUrl + createPath, request)
+    fetch(apiUrl + createCommentPath, request)
       .then(response => response.json())
       .then(() => {
         setIsLoaded(false);
@@ -119,15 +112,15 @@ const HackitPage = () => {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ 
-          name: slug,
+          postId: slug,
         }),
       };
   
-      fetch(apiUrl + path, request)
+      fetch(apiUrl + getPostPath, request)
         .then(response => response.json())
         .then(data => {
           setIsLoaded(true);
-          setHackit(data);
+          setPost(data);
         });
     }
   }, [slug, isLoaded]);
@@ -136,17 +129,10 @@ const HackitPage = () => {
     <Container>
       <Dialog onClose={handleDialogClose} open={isDialogOpen} fullWidth>
         <DialogTitle>
-          Create Post
+          Create Comment
         </DialogTitle>
         <DialogContent>
           <form className={classes.root}>
-            <TextField
-              id="post-title"
-              label="Post Title"
-              required
-              onChange={onTitleChange}
-              className={classes.textField}
-            />
             <TextField
               id="post-body"
               label="Post Body"
@@ -158,27 +144,39 @@ const HackitPage = () => {
           </form>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleCreatePost} color="primary">
+          <Button autoFocus onClick={handleCreateComment} color="primary">
             Submit
           </Button>
         </DialogActions>
       </Dialog>
-        {hackit ? (
+        {post ? (
           <Container>
             <Typography variant="h3">
-              {hackit.name}
+              {post.title}
             </Typography>
             <Typography>
-              {hackit.description}
+              {post.body}
             </Typography>
-            <Button variant="outlined" color="primary" onClick={handleDialogOpen}>Create Post</Button>
+            <Link to={`/user/${post.creator}`}>
+              <Typography>
+                {post.creator}
+              </Typography>
+            </Link>
+            <Button variant="outlined" color="primary" onClick={handleDialogOpen}>Create Comment</Button>
             <Divider className={classes.divider} />
             <Container style={{textAlign: "left"}}>
-              {hackit.posts.map(post =>     
-                <Paper key={post.postId} className={classes.paper} onClick={() => {openPost(post);}}>
-                  <Typography variant="h3">{post.title}</Typography>
-                  <Typography variant="subtitle1">By {post.creator}</Typography>
-                  <Typography>{post.body}</Typography>
+              <Typography variant="h4">
+                Comments:
+              </Typography>
+              {post.comments.map(comment =>     
+                <Paper key={comment.commentId} className={classes.paper}>
+                  <Typography variant="h5">{comment.body}</Typography>
+                    <Typography variant="subtitle1">
+                      {"By "} 
+                      <Link to={`/user/${comment.username}`}>
+                        {comment.username}
+                      </Link>
+                    </Typography>
                 </Paper>
               )}
             </Container>
@@ -186,7 +184,7 @@ const HackitPage = () => {
         ) : (
           <Container>
             <Typography variant="h3">
-              Hackit not found
+              Post not found
             </Typography>
           </Container>
         )}
@@ -194,4 +192,4 @@ const HackitPage = () => {
   )
 };
 
-export default HackitPage;
+export default PostPage;
