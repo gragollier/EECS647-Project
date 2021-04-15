@@ -47,13 +47,13 @@ type Post = {
   creator: string,
   title: string,
   body: string,
-  timestamp: string
+  timestamp: string,
 }
 
 type Hackit = {
   name: string,
   description: string,
-  posts: [Post]
+  posts: Post[],
 }
 
 const path = '/gethackit';

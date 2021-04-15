@@ -54,7 +54,7 @@ type Post = {
 type Comment = {
   commentId: string,
   body: string,
-  tiemstamp: string,
+  timestamp: string,
   username: string,
   userBio: string,
 }

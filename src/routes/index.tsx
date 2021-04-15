@@ -7,6 +7,7 @@ import LogIn from './LogIn';
 import SignUp from './SignUp';
 import HackitPage from './Hackit';
 import PostPage from './Post';
+import UserPage from './User';
 
 const AppRouter = () => {
   return (
@@ -36,6 +37,11 @@ const AppRouter = () => {
           exact
           path="/post/:slug"
           component={PostPage}
+        />
+        <Route
+          exact
+          path="/user/:slug"
+          component={UserPage}
         />
         <Route
           exact
