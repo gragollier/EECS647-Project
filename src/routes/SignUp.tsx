@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
 const api = 'https://1pyrtegry1.execute-api.us-east-1.amazonaws.com/prod';
-const path = '/signin'
+const path = '/createuser'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,12 +29,13 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const SignIn = () => {
+const SignUp = () => {
   const history = useHistory();
   const classes = useStyles();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [bio, setBio] = useState('');
 
   const changeUsername = (event: any) => {
     setUsername(event.target.value);
@@ -44,6 +45,10 @@ const SignIn = () => {
     setPassword(event.target.value);
   }
 
+  const changeBio = (event: any) => {
+    setBio(event.target.value);
+  }
+
   const handleClick = (event: any) => {
     const request = {
       method: 'POST',
@@ -51,6 +56,7 @@ const SignIn = () => {
       body: JSON.stringify({ 
         username: username, 
         password: password,
+        bio: bio,
       }),
     };
 
@@ -60,6 +66,7 @@ const SignIn = () => {
       .then(response => response.json())
       .then(data => {
         if (data.signedIn) {
+          localStorage.setItem("username", username);
           history.push('/home');
         }
       });
@@ -67,8 +74,8 @@ const SignIn = () => {
 
   return (
     <Paper className={classes.root}>
-      <Typography variant="h5">
-        Sign In!
+      <Typography variant="h4">
+        Sign Up!
       </Typography>
       <TextField 
         variant="outlined" 
@@ -88,16 +95,29 @@ const SignIn = () => {
         className={classes.textField}
         fullWidth
       />
+      <TextField 
+        variant="outlined" 
+        label="A Short Biography"
+        value={bio} 
+        onChange={changeBio} 
+        className={classes.textField}
+        fullWidth
+      />
+      <Link to='/'>
+        <Typography variant="subtitle1">
+          Already have an account? Log In!
+        </Typography>
+      </Link>
       <Button 
         variant="contained"
         color="primary"
         onClick={handleClick}
         className={classes.button}
       >
-        Sign In
+        Sign Up
       </Button>
     </Paper>
   )
 };
 
-export default SignIn;
+export default SignUp;

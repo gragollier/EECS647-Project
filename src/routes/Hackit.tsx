@@ -89,12 +89,14 @@ const HackitPage = () => {
 
   const handleCreatePost = () => {
     setIsDialogOpen(false);
+    const username = localStorage.getItem("username");
+
     const request = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ 
         sub: slug,
-        creator: "grant",
+        creator: username,
         title: title,
         body: body
       }),
