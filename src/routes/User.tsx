@@ -140,7 +140,7 @@ const UserPage = () => {
       ) : (
         <Container>
           <Typography variant="h3">
-            User not found
+            User loading...
           </Typography>
         </Container>
       )}

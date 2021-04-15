@@ -186,7 +186,7 @@ const HackitPage = () => {
         ) : (
           <Container>
             <Typography variant="h3">
-              Hackit not found
+              Hackit loading...
             </Typography>
           </Container>
         )}

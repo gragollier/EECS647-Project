@@ -184,7 +184,7 @@ const PostPage = () => {
         ) : (
           <Container>
             <Typography variant="h3">
-              Post not found
+              Post loading...
             </Typography>
           </Container>
         )}
