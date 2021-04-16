@@ -13,6 +13,15 @@ import { apiUrl } from '../config';
 type Hackit = {
   name: string,
   description: string,
+  topPost: Post,
+}
+
+type Post = {
+  postId: string,
+  creator: string,
+  title: string,
+  body: string,
+  timestamp: string,
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -119,6 +128,13 @@ const Home = () => {
               <Typography variant="body1">
                 {hackit.description}
               </Typography>
+              {hackit.topPost ? (
+                <Typography>
+                  Top Post: {hackit.topPost.title}
+                </Typography>
+              ) : (
+                <div />
+              )}
             </Paper>
           );
         })}
