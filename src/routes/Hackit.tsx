@@ -45,6 +45,7 @@ type UrlParams = {
 type Post = {
   postId: string,
   creator: string,
+  creatorBio: string,
   title: string,
   body: string,
   timestamp: string,

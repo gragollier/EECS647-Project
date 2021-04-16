@@ -6,7 +6,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
-import { Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Tooltip } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -34,7 +34,11 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       padding: '20px',
       margin: '5px',
-    }
+    },
+    user: {
+      margin: '10px',
+      padding: '10px'
+    },
   }),
 );
 
@@ -45,6 +49,7 @@ type UrlParams = {
 type Post = {
   postId: string,
   creator: string,
+  creatorBio: string,
   title: string,
   body: string,
   timestamp: string
@@ -158,7 +163,7 @@ const PostPage = () => {
               {post.body}
             </Typography>
             <Link to={`/user/${post.creator}`}>
-              <Typography>
+              <Typography title={post.creatorBio}>
                 {post.creator}
               </Typography>
             </Link>

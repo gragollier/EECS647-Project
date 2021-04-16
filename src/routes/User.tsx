@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
@@ -59,8 +59,9 @@ type Comment = {
   commentId: string,
   body: string,
   timestamp: string,
-  username: string,
-  userBio: string,
+  postTitle: string,
+  postForum: string,
+  postId: string,
 }
 
 const getUserPath = '/getuser';
@@ -104,7 +105,7 @@ const UserPage = () => {
           <Typography>
             {user.bio}
           </Typography>
-          {user.posts.length && (
+          {user.posts.length ? (
             <Container style={{textAlign: "left"}}>
               <Divider className={classes.divider} />
               <Typography variant="h4">
@@ -119,6 +120,8 @@ const UserPage = () => {
                 </Paper>
               )}
             </Container>
+          ) : (
+            <div />
           )}
           {user.comments.length && (
             <Container style={{textAlign: "left"}}>
@@ -130,7 +133,19 @@ const UserPage = () => {
                 <Paper key={comment.commentId} className={classes.paper}>
                   <Typography variant="h5">{comment.body}</Typography>
                   <Typography>
-                    {(new Date(comment.timestamp)).toLocaleString()}
+                    {"on "} {(new Date(comment.timestamp)).toLocaleString()}
+                  </Typography>
+                  <Typography>
+                    {"to "}
+                    <Link to={`/post/${comment.postId}`}>
+                      {comment.postTitle}
+                    </Link>
+                  </Typography>
+                  <Typography>
+                    {"in "}
+                    <Link to={`/h/${comment.postForum}`}>
+                      {comment.postForum}
+                    </Link>
                   </Typography>
                 </Paper>
               )}
